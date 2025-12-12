@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi niña hermosa</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: white;
+            background: linear-gradient(to bottom,
+                #001028 0%,
+                #00193d 40%,
+                #0b2a55 60%,
+                #1c3f67 80%,
+                #4f7fbf 100%
+            );
+        }
+
+        /* Estrellitas */
+        .stars {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 2s infinite alternate;
+        }
+
+        @keyframes blink {
+            from { opacity: 0.2; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 45px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px gold;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px 30px; /* reducido para que no sea tan ancho */
+            max-width: 700px; /* ancho máximo del cuadro */
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 25px rgba(0,0,0,0.4);
+        }
+
+        .btn {
+            margin-top: 25px;
+            padding: 14px 28px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #ffdd57, #ff7b00);
+            color: #1c3f67;
+            cursor: pointer;
+            transition: .3s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 5px 14px rgba(255,255,255,0.6);
+        }
+
+        /* Ballenas animadas */
+        .whale {
+            position: absolute;
+            bottom: -200px;
+            width: 260px;
+            opacity: 0.9;
+            animation: swim 12s infinite ease-in-out;
+        }
+
+        .whale:nth-child(1) { left: 12%; animation-delay: 0s; }
+        .whale:nth-child(2) { left: 60%; animation-delay: 4s; }
+
+        @keyframes swim {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-230px) translateX(-40px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        /* Texto máquina de escribir */
+        .typing-text {
+            color: gold; /* color más cálido que combina con el fondo azul */
+            font-size: 20px;
+            margin-top: 30px;
+            white-space: pre-wrap;
+            overflow: hidden;
+            border-right: .15em solid #b5e3ff;
+            text-align: left; /* para que los párrafos se vean más naturales */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Estrellitas -->
+    <script>
+        for (let i = 0; i < 20; i++) {
+            let star = document.createElement("div");
+            star.className = "stars";
+            star.style.top = Math.random() * 200 + "px";
+            star.style.left = Math.random() * 100 + "vw";
+            star.style.opacity = Math.random();
+            document.body.appendChild(star);
+        }
+    </script>
+
+    <!-- Ballenas -->
+    <img class="whale" src="ballena.png" alt="ballena">
+    <img class="whale" src="ballena.png" alt="ballena">
+
+    <div class="container">
+        <h1>PARA EL AMOR DE MI VIDA</h1>
+
+        <div class="typing-text" id="mensaje"></div>
+
+        <button class="btn" onclick="location.href='Cumple.html'">Ir a Página 1</button>
+        <button class="btn" onclick="location.href='Despedida.html'">Ir a Página 2</button>
+    </div>
+
+    <script>
+        const texto = "Bienvenida a este espacio especial\n\nPara el amor de mi vida,\n\nDesde el momento en que nuestras vidas se cruzaron, cada día se llenó de luz y significado. Has sido lo mejor que me ha pasado, y cada momento a tu lado es un tesoro invaluable. Tu risa ilumina mis días y tu cariño llena mi corazón de alegría.\n\nEsta página es un reflejo de todo lo que hemos compartido y de lo que aún deseo construir a tu lado. La he estado preparando con mucho cariño, y aunque aún faltan detalles, mi mayor deseo es completarla poco a poco, contigo.";
+
+        const mensaje = document.getElementById("mensaje");
+        let index = 0;
+
+        function escribir() {
+            if (index < texto.length) {
+                mensaje.innerHTML += texto.charAt(index);
+                index++;
+                setTimeout(escribir, 40); // velocidad de escritura
+            } else {
+                mensaje.style.borderRight = "none";
+            }
+        }
+
+        escribir();
+    </script>
+
+</body>
+</html>
+
+
+
+

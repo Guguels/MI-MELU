@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poema Animado</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: white;
+      font-family: 'Georgia', serif;
+      overflow-y: auto;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .contenedor {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* PARTE SUPERIOR */
+    .superior {
+      display: flex;
+      width: 100%;
+      gap: 20px;
+      padding: 10px;
+    }
+
+    .texto {
+      flex: 2;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .imagenes-derecha {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .imagenes-derecha img {
+      width: 100%;
+      height: auto;
+      border: none !important;
+      padding: 0 !important;
+      background: none !important;
+      border-radius: 0 !important;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
+    }
+
+    /* IMÁGENES DE ABAJO */
+    .imagenes-abajo {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 10px;
+    }
+
+    .imagenes-abajo img {
+      width: 30%;
+      height: auto;
+      border: none !important;
+      padding: 0 !important;
+      background: none !important;
+      border-radius: 0 !important;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
+    }
+
+    /* BOTÓN DE MÚSICA */
+    #btn-musica {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 30px;
+      border: none;
+      font-weight: bold;
+      background: linear-gradient(135deg, #ffdd57, #ff7b00);
+      cursor: pointer;
+      z-index: 1000;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="estrellas"></canvas>
+
+  <audio id="musica" loop>
+    <source src="Acurrucar.mpeg" type="audio/mpeg">
+  </audio>
+
+  <button id="btn-musica">🎶 Reproducir música</button>
+
+  <div class="contenedor">
+
+    <div class="superior">
+      <div class="texto" id="poema"></div>
+
+      <div class="imagenes-derecha">
+        <img src="IMAGEN 2.jpeg" alt="Derecha 1">
+        <img src="IMAGEN 3.jpeg" alt="Derecha 2">
+      </div>
+    </div>
+
+    <div class="imagenes-abajo">
+      <img src="IMAGEN 4.jpg" alt="Abajo 1">
+      <img src="IMAGEN 1.jpeg" alt="Abajo 2">
+      <img src="pareja.jpg" alt="Abajo 3">
+    </div>
+
+  </div>
+
+  <script>
+    /* ---------------- TEXTO DEL POEMA ---------------- */
+    const texto = `
+Hola, mi niña,
+
+Quiero decirte que desde que nos conocimos en ese juego, cada momento contigo ha sido muy especial.
+Recuerdo con mucho cariño cuando éramos amigos y cómo me apoyabas en los momentos difíciles.
+Tus palabras y esos apodos tan tiernos que me decías, como “mi amor” o “mi pececito”, siempre me hicieron sentir querido y comprendido.
+
+Quiero pedirte disculpas de corazón, mi niña, por haber sido intenso en algunos momentos y por haberte presionado cuando pediste un espacio para pensar.
+También lamento haber dejado que mis problemas, mi ánimo y mis heridas te afectaran.
+Siento mucho si te hice cargar cosas que no te correspondían.
+
+Siento que ahora necesitas tu espacio, mi niña, y quiero respetarlo completamente.
+Por eso creo que lo mejor es darnos este tiempo hasta fin de año, para que podamos pensar bien y ver qué es lo mejor para los dos.
+
+Antes, mi sueño de ser policía o militar era solo una forma de alejarme de mis problemas…
+pero cuando llegaste tú, mi niña, ese ideal cambió por completo.
+Ahora solo quería quedarme contigo, apoyarte, cuidarte y construir algo real a tu lado.
+
+Gracias por todo lo que vivimos y por todo lo que significas para mí, mi niña.
+Siempre voy a estar aquí, con todo mi cariño y con el mayor respeto por lo que sientes.
+`;
+
+    const velocidad = 40;
+    let i = 0;
+    const poemaDiv = document.getElementById("poema");
+    const imagenes = document.querySelectorAll("img");
+
+    function escribir() {
+      if (i < texto.length) {
+        poemaDiv.innerHTML += texto.charAt(i);
+        i++;
+        setTimeout(escribir, velocidad);
+      } else {
+        imagenes.forEach((img, index) => {
+          setTimeout(() => {
+            img.style.opacity = "1";
+            img.style.transform = "translateY(0)";
+          }, index * 1200);
+        });
+      }
+    }
+    escribir();
+
+    /* ---------------- FONDO ESTRELLADO ---------------- */
+    const canvas = document.getElementById("estrellas");
+    const ctx = canvas.getContext("2d");
+
+    function ajustarCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    ajustarCanvas();
+
+    let estrellas = [];
+    const numEstrellas = 120;
+
+    for (let i = 0; i < numEstrellas; i++) {
+      estrellas.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radio: Math.random() * 1.5,
+        velocidad: Math.random() * 0.5 + 0.2
+      });
+    }
+
+    function animar() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+
+      estrellas.forEach(e => {
+        ctx.beginPath();
+        ctx.arc(e.x, e.y, e.radio, 0, Math.PI * 2);
+        ctx.fill();
+        e.y += e.velocidad;
+
+        if (e.y > canvas.height) e.y = 0;
+      });
+
+      requestAnimationFrame(animar);
+    }
+
+    animar();
+    window.addEventListener("resize", ajustarCanvas);
+
+    /* ---------------- BOTÓN DE MÚSICA ---------------- */
+    const musica = document.getElementById("musica");
+    const btnMusica = document.getElementById("btn-musica");
+
+    // Permite que el botón funcione desde el primer clic
+    btnMusica.addEventListener("click", () => {
+      if (musica.paused) {
+        musica.play().catch(() => {}); // Reproduce la música
+        btnMusica.textContent = "⏸️ Pausar música";
+      } else {
+        musica.pause();                // Pausa la música
+        btnMusica.textContent = "🎶 Reproducir música";
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+
+

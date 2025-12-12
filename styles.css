@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  padding: 20px;
+  background: black;
+  color: white;
+  font-family: 'Georgia', serif;
+  overflow-y: auto;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.contenedor {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 30px;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.texto {
+  flex: 2;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.imagenes {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.imagenes img {
+  max-width: 200px;
+  height: auto;
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+/* Efecto máquina de escribir */
+.escribir {
+  border-right: 2px solid white;
+  white-space: pre-line;
+  overflow: hidden;
+}
+
+/* Botón de música */
+#btn-musica {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ffdd57, #ff7b00);
+  color: black;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#btn-musica:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+}
